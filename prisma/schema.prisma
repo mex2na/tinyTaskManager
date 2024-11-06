@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,9 +8,63 @@ datasource db {
 }
 
 model Collectif {
-  id           Int    @id @default(autoincrement())
+  id           Int       @id @default(autoincrement())
   nomCollectif String
   villeOrigine String
-  email        String @unique
+  email        String    @unique
+  tel          String    @unique
   password     String
+  logo         String
+  Poete        Poete[]
+  tournois     Tournoi[]
+}
+
+model Tournoi {
+  idTournoi    Int     @id @default(autoincrement())
+  nomTournoi   String
+  nbJury       Int     @default(3)
+  participants Poete[]
+
+  idCollectif Int
+  collectif   Collectif @relation(fields: [idCollectif], references: [id])
+}
+
+model Poete {
+  idPoete          Int           @id @default(autoincrement())
+  nomPoete         String
+  prenomPoete      String
+  pseudo           String
+  telPoete         String
+  dateNaissance    DateTime
+  idCollectif      Int
+  Collectif        Collectif     @relation(fields: [idCollectif], references: [id])
+  tournoiParticipe Tournoi[]
+  performance      Performance[]
+}
+
+model Performance {
+  id        Int        @id @default(autoincrement())
+  duree     String
+  totalNote Int
+  notes     Note[]
+  penalites Penalite[]
+  idPoete   Int
+  poete     Poete      @relation(fields: [idPoete], references: [idPoete])
+}
+
+model Note {
+  id      Int         @id @default(autoincrement())
+  valeur  Int
+  prise   Boolean     @default(true)
+  idPerfo Int
+  Perfo   Performance @relation(fields: [idPerfo], references: [id])
+}
+
+model Penalite {
+  id     Int    @id @default(autoincrement())
+  valeur Int
+  cause  String
+
+  idPerfo Int
+  perfo   Performance @relation(fields: [idPerfo], references: [id])
 }
