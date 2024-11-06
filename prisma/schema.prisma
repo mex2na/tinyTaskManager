@@ -14,7 +14,7 @@ model Collectif {
   email        String    @unique
   tel          String    @unique
   password     String
-  logo         String
+  logo         String?
   Poete        Poete[]
   tournois     Tournoi[]
 }
