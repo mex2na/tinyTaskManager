@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Link from "next/link";
+import { Toaster } from "react-hot-toast";
+// import { ClerkProvider, SignedIn, SignedOut, UserButton, SignInButton } from "@clerk/nextjs";
+
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -25,6 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    // <ClerkProvider>
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -36,21 +40,40 @@ export default function RootLayout({
 
           <div>
             <p>
+              {/* <SignedOut> */}
+              <Link href="/signIn">Sign In</Link>
+              {/* <SignInButton></SignInButton> */}
 
-              <Link href="/signIn">Sign In</Link> | <Link href="/signUp">Sign Up</Link>
+              {/* <UserButton></UserButton> */}
+              {/* </SignedOut> */}
+
+              |
+              {/* <SignedIn> */}
+              <Link href="/signUp">Sign Up</Link>
+              {/* <UserButton></UserButton> */}
+              {/* </SignedIn> */}
             </p>
           </div>
         </div>
-        <div className="m-16 p-5 flex gap-7 bg-slate-400">
+        <div className="m-16 p-5 flex gap-7">
 
 
-          <div className="flex-col  p-3 bg-lime-600 w-1/3">
+          <div className="flex-col  p-3  bg-lime-600 w-1/3">
+
             <div>
+
+              <Link href={"/dashboard"}>
+                Dashboard
+              </Link>
+
+            </div>
+
+            <div>
+
 
               <Link href={"/membre"}>
                 Membres
               </Link>
-
             </div>
 
             <div>
@@ -70,8 +93,11 @@ export default function RootLayout({
 
           </div>
 
+          <Toaster position="bottom-center"></Toaster>
+
         </div>
       </body>
     </html>
+    /* </ClerkProvider> */
   );
 }

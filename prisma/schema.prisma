@@ -35,7 +35,7 @@ model Poete {
   prenomPoete      String
   pseudo           String
   telPoete         String
-  dateNaissance    DateTime
+  dateNaissance    String
   idCollectif      Int
   Collectif        Collectif     @relation(fields: [idCollectif], references: [id])
   tournoiParticipe Tournoi[]

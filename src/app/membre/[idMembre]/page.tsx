@@ -1,11 +1,31 @@
+import { prisma } from "@/lib/db";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode, Suspense } from "react";
+import UpdateMembre from "@/app/components/UpdateMembre";
+export default async function membreUnique({ params }: {
+    params: {
+        idMembre: number
+    }
+}) {
 
-export default async function membreUnique({ params }) {
+    const p = await params;
+    const membreToUpdate = await prisma.poete.findUnique({
+        where: {
+            idPoete: +p.idMembre
+        }
+    })
 
-    const idPoete = await params;
+    console.log(membreToUpdate);
+
+
+
+
 
     return <>
-        <div className="text-xl">Voir information ou modifier information d'un membre {params.idMembre}</div>
-
+        <Suspense>
+            <UpdateMembre membre={membreToUpdate}></UpdateMembre>
+        </Suspense>
 
     </>
 
