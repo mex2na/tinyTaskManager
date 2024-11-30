@@ -34,68 +34,18 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
 
-        <div className="w-full fixed top-0 right-10 left-10 h-16 bg-slate-500 flex justify-between p-5 px-12 ">
-
-          <div>GAME</div>
-
-          <div>
-            <p>
-              {/* <SignedOut> */}
-              <Link href="/signIn">Sign In</Link>
-              {/* <SignInButton></SignInButton> */}
-
-              {/* <UserButton></UserButton> */}
-              {/* </SignedOut> */}
-
-              |
-              {/* <SignedIn> */}
-              <Link href="/signUp">Sign Up</Link>
-              {/* <UserButton></UserButton> */}
-              {/* </SignedIn> */}
-            </p>
-          </div>
-        </div>
-        <div className="m-16 p-5 flex gap-7">
 
 
-          <div className="flex-col  p-3  bg-lime-600 w-1/3">
-
-            <div>
-
-              <Link href={"/dashboard"}>
-                Dashboard
-              </Link>
-
-            </div>
-
-            <div>
+        <div className="w-2/3">
 
 
-              <Link href={"/membre"}>
-                Membres
-              </Link>
-            </div>
-
-            <div>
-
-              <Link href={"/tournoi"}>
-                Tournois
-              </Link>
-
-            </div>
-
-          </div>
-
-          <div className="w-2/3">
-
-
-            {children}
-
-          </div>
-
-          <Toaster position="bottom-center"></Toaster>
+          {children}
 
         </div>
+
+        <Toaster position="bottom-center"></Toaster>
+
+
       </body>
     </html>
     /* </ClerkProvider> */
