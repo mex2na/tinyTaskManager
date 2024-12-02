@@ -34,7 +34,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
 
-        <div>
+        <div className="fixed top-0 left-0 right-0 h-20 p-5  border-b-white border-b-2">
 
           <div className="text-xl">Tiny task manager</div>
 
@@ -42,7 +42,7 @@ export default function RootLayout({
 
 
 
-        <div className="w-2/3">
+        <div className=" m-20 p-5">
 
 
           {children}

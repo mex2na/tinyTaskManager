@@ -1,102 +1,66 @@
 "use server"
 
+import { TaskDto } from "@/dto/TaskDto";
 import { prisma } from "@/lib/db";
 import { revalidatePath } from "next/cache";
-import toast from "react-hot-toast";
-
-
-export async function addMembre(formData: FormData) {
-
-    try {
-
-        const newMember = await prisma.poete.create({
-            data: {
-                nomPoete: formData.get("nomPoete") as string,
-                prenomPoete: formData.get("prenomPoete") as string,
-                pseudo: formData.get("pseudo") as string,
-                telPoete: formData.get("telPoete") as string,
-                dateNaissance: formData.get("dateNaissance") as string,
-                idCollectif: 1
-
-            }
-        })
 
 
 
-        return {
-            message: `New member added with success!!`
+export async function addNewTaskAction(formData: FormData) {
+
+    const newTask = await prisma.task.create({
+        data: {
+            task: formData.get("newTask") as string,
+            isDone: false,
+            idUser: 1
         }
-    } catch (error) {
-        return {
-            e: error,
-            message: "An error occured !!!"
-        }
-    }
+    })
 
 
+    revalidatePath("/task")
 
 }
 
 
-export async function updateMembreAction(formData: FormData, idPoete: number) {
+export async function updateTaskAction(task: TaskDto) {
 
-    try {
+    const taskUpdater = await prisma.task.update({
+        data: {
+            task: task.task,
 
-        const newMember = await prisma.poete.update({
-            where: {
-                idPoete: idPoete
-            },
-            data: {
-                nomPoete: formData.get("nomPoete") as string,
-                prenomPoete: formData.get("prenomPoete") as string,
-                pseudo: formData.get("pseudo") as string,
-                telPoete: formData.get("telPoete") as string,
-                dateNaissance: formData.get("dateNaissance") as string,
-
-
-            }
-        })
-
-
-        revalidatePath("/membre/" + idPoete)
-
-        return {
-            message: `Member info updated successfully!!`
+        },
+        where: {
+            idTask: task.idTask
         }
-    } catch (error) {
-        return {
-            e: error,
-            message: "An error occured !!!"
-        }
-    }
+    })
 
 
+    revalidatePath("/task/" + task.idTask)
 
 }
 
+export async function toggleDoneAction(task: TaskDto) {
 
-
-export async function deleteMemberAction(id: number | string) {
-
-    try {
-
-        const d = await prisma.poete.delete({
-            where: {
-                idPoete: +id
-            }
-        })
-
-        revalidatePath("/membre")
-
-        return {
-            message: "Member deleted !!"
+    const updateDoneState = await prisma.task.update({
+        data: {
+            isDone: !task.isDone
+        },
+        where: {
+            idTask: task.idTask
         }
+    })
 
-    } catch (error) {
-        return {
-            e: error,
-            message: "An error is occured!!"
-        }
-    }
+    revalidatePath("task")
 
 }
+
+export async function deleteTaskAction(id: number) {
+    const deleted = await prisma.task.delete({
+        where: {
+            idTask: id
+        }
+    })
+
+    revalidatePath("task")
+}
+
