@@ -34,6 +34,12 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
 
+        <div>
+
+          <div className="text-xl">Tiny task manager</div>
+
+        </div>
+
 
 
         <div className="w-2/3">
