@@ -5,7 +5,7 @@ import { useParams } from "next/navigation"
 
 
 export default async function ({ params }: {
-    params: { id: number }
+    params: Promise<{ id: string }>
 }) {
     const { id } = await params
     const taskToUptade = await prisma.task.findUnique({
